@@ -1,0 +1,40 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Unit test / coverage
+.coverage
+.pytest_cache/
+htmlcov/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project-specific
+config/config.yaml
+data/cache/
+data/models/
+logs/
+*.csv
+*.parquet
+*.pkl
+*.joblib
+
+# OS
+.DS_Store
+Thumbs.db

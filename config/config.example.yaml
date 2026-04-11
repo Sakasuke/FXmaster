@@ -1,0 +1,92 @@
+# FXmaster 設定ファイルのサンプル
+# このファイルを config.yaml にコピーして、APIキー等を設定してください。
+
+broker:
+  name: oanda
+  # practice (デモ) または live (本番)
+  environment: practice
+  account_id: "YOUR_OANDA_ACCOUNT_ID"
+  access_token: "YOUR_OANDA_API_TOKEN"
+
+# 取引対象
+trading:
+  instrument: USD_JPY
+  # 上位時間足（トレンド判定用）と下位時間足（エントリー検出用）
+  htf_granularity: H1
+  ltf_granularity: M5
+  # 許容スプレッド（pips）。これを超える時はエントリー禁止
+  max_spread_pips: 1.5
+  # 取引可能時間帯（UTC）: 流動性の高い欧州・NY時間を想定
+  trading_hours_utc:
+    start: "07:00"
+    end: "21:00"
+  # 経済指標直前直後はエントリー禁止（分）
+  news_avoid_minutes_before: 15
+  news_avoid_minutes_after: 30
+
+# 戦略パラメータ
+strategy:
+  # EMA 期間
+  ema_fast: 25
+  ema_slow: 75
+  # ADX（トレンド強度）の最小閾値
+  adx_min: 25
+  # RSI による押し目/戻りの検出
+  rsi_period: 14
+  rsi_pullback_long: 40   # 上昇トレンド中の押し目判定
+  rsi_pullback_short: 60  # 下降トレンド中の戻り判定
+  # AI が出力するトレンド継続確率の最低閾値
+  ai_confidence_min: 0.60
+  # ATR ベースのストップロス倍率
+  atr_period: 14
+  atr_sl_mult: 1.2
+  atr_tp_mult: 1.8
+  # +1.5R で半分利確
+  partial_take_profit_at_r: 1.5
+  partial_take_profit_ratio: 0.5
+  # トレーリングストップ ATR 倍率
+  trailing_atr_mult: 1.5
+
+# リスク管理
+risk:
+  # 1 トレードあたりの最大損失 = 口座資金 × この値
+  risk_per_trade_pct: 0.02
+  # 1 日の最大損失率（到達したら当日停止）
+  max_daily_loss_pct: 0.06
+  # 連敗時のクールダウン
+  max_consecutive_losses: 4
+  cooldown_minutes_after_max_losses: 60
+  # 同時保有ポジション数
+  max_concurrent_positions: 1
+
+# AI モデル
+model:
+  # LightGBM のハイパーパラメータ
+  type: lightgbm
+  params:
+    objective: binary
+    metric: auc
+    learning_rate: 0.05
+    num_leaves: 31
+    max_depth: -1
+    min_data_in_leaf: 50
+    feature_fraction: 0.8
+    bagging_fraction: 0.8
+    bagging_freq: 5
+    verbosity: -1
+  # 予測ラベル: 次の N 本で +X pips 以上動いたら 1
+  label_horizon_bars: 12       # 5分足 × 12 = 60分先
+  label_threshold_pips: 8      # 8 pips 以上動けばトレンド継続と定義
+  # 学習・検証の分割比率
+  test_size: 0.2
+  # モデル保存先
+  model_dir: data/models
+
+# データキャッシュ
+data:
+  cache_dir: data/cache
+
+# ロギング
+logging:
+  level: INFO
+  file: logs/fxmaster.log
