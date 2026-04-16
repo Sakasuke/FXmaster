@@ -10,10 +10,13 @@ import yaml
 
 @dataclass
 class BrokerConfig:
-    name: str = "oanda"
-    environment: str = "practice"
-    account_id: str = ""
+    name: str = "ctrader"        # "ctrader" または "oanda"
+    environment: str = "demo"    # cTrader: "demo"/"live"  OANDA: "practice"/"live"
+    account_id: str = ""         # cTrader: 数値ID文字列  OANDA: アカウントID文字列
     access_token: str = ""
+    # cTrader 専用フィールド（OANDA 使用時は空欄でよい）
+    client_id: str = ""
+    client_secret: str = ""
 
 
 @dataclass
@@ -95,6 +98,15 @@ def _coerce(cls, data: dict[str, Any] | None):
     """Build a dataclass instance from a nested dict."""
     if data is None:
         return cls()
+    if cls is BrokerConfig:
+        return BrokerConfig(
+            name=str(data.get("name", "ctrader")),
+            environment=str(data.get("environment", "demo")),
+            account_id=str(data.get("account_id", "")),
+            access_token=str(data.get("access_token", "")),
+            client_id=str(data.get("client_id", "")),
+            client_secret=str(data.get("client_secret", "")),
+        )
     if cls is TradingHours:
         return TradingHours(**data)
     if cls is TradingConfig:

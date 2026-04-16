@@ -35,6 +35,7 @@ class OpenPosition:
     units: int
     average_price: float
     unrealized_pnl: float
+    position_id: int = 0  # cTrader 用ポジション ID（OANDA では未使用）
 
 
 class BrokerInterface(ABC):

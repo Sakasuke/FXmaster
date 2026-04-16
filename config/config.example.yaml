@@ -2,11 +2,22 @@
 # このファイルを config.yaml にコピーして、APIキー等を設定してください。
 
 broker:
-  name: oanda
-  # practice (デモ) または live (本番)
-  environment: practice
-  account_id: "YOUR_OANDA_ACCOUNT_ID"
-  access_token: "YOUR_OANDA_API_TOKEN"
+  # ===== cTrader (Axiory など) =====
+  name: ctrader
+  environment: demo          # demo または live
+  # cTrader Open API クレデンシャル（connect.spotware.com で取得）
+  client_id: "YOUR_CTRADER_CLIENT_ID"
+  client_secret: "YOUR_CTRADER_CLIENT_SECRET"
+  # アクセストークンは scripts/get_ctrader_token.py で取得し .env に保存
+  access_token: "YOUR_CTRADER_ACCESS_TOKEN"
+  # Axiory のデモ口座 ID（数値）
+  account_id: "12345678"
+
+  # ===== OANDA（使用する場合は name: oanda に変更） =====
+  # name: oanda
+  # environment: practice     # practice または live
+  # account_id: "YOUR_OANDA_ACCOUNT_ID"
+  # access_token: "YOUR_OANDA_API_TOKEN"
 
 # 取引対象
 trading:
