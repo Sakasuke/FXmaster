@@ -27,6 +27,8 @@ htmlcov/
 
 # Project-specific
 config/config.yaml
+.env
+.env.*
 data/cache/
 data/models/
 logs/
