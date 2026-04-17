@@ -10,6 +10,6 @@ matplotlib>=3.8
 tqdm>=4.66
 python-dotenv>=1.0
 # cTrader Open API (broker=ctrader 時のみ必要)
-ctrader-open-api>=2.0
+ctrader-open-api>=0.9,<1.0
 protobuf>=4.21
 twisted>=23.0

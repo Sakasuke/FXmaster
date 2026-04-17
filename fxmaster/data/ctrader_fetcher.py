@@ -409,7 +409,7 @@ class CTraderClient:
             OrderResult
         """
         from ctrader_open_api.messages.OpenApiMessages_pb2 import ProtoOANewOrderReq
-        from ctrader_open_api.messages.OpenApiCommonMessages_pb2 import (
+        from ctrader_open_api.messages.OpenApiModelMessages_pb2 import (
             ProtoOAOrderType,
             ProtoOATradeSide,
         )
